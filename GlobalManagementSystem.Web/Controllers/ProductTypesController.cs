@@ -22,8 +22,8 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: ProductTypes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ProductTypes.Include(p => p.Brand);
-            return View(await applicationDbContext.ToListAsync());
+            var productTypes = await _context.ProductTypes.Include(p => p.Brand).ToListAsync();
+            return View(productTypes);
         }
 
         // GET: ProductTypes/Details/5

@@ -22,7 +22,8 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Suppliers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Suppliers.ToListAsync());
+            var suppliers = await _context.Suppliers.ToListAsync();
+            return View(suppliers);
         }
 
         // GET: Suppliers/Details/5
