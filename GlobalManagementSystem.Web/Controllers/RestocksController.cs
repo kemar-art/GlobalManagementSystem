@@ -7,22 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GlobalManagementSystem.Web.Data;
+using AutoMapper;
+using GlobalManagementSystem.Web.Models;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
     public class RestocksController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
-        public RestocksController(ApplicationDbContext context)
+        public RestocksController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Restocks
         public async Task<IActionResult> Index()
         {
-            var restocks = await _context.Restocks.Include(r => r.Product).Include(r => r.Supplier).ToListAsync();
+            var restocks = mapper.Map<List<RestockVM>> (await _context.Restocks.Include(r => r.Product).Include(r => r.Supplier).ToListAsync());
             return View(restocks);
         }
 

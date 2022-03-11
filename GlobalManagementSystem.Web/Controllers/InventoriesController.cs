@@ -7,22 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GlobalManagementSystem.Web.Data;
+using AutoMapper;
+using GlobalManagementSystem.Web.Models;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
     public class InventoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
-        public InventoriesController(ApplicationDbContext context)
+        public InventoriesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Inventories
         public async Task<IActionResult> Index()
         {
-            var inventorys = await _context.Inventorys.Include(i => i.Product).ToListAsync();
+            var inventorys = mapper.Map<List<InventoryVM>> (await _context.Inventorys.Include(i => i.Product).ToListAsync());
             return View(inventorys);
         }
 

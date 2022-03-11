@@ -7,22 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GlobalManagementSystem.Web.Data;
+using AutoMapper;
+using GlobalManagementSystem.Web.Models;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
     public class SuppliersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
-        public SuppliersController(ApplicationDbContext context)
+        public SuppliersController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Suppliers
         public async Task<IActionResult> Index()
         {
-            var suppliers = await _context.Suppliers.ToListAsync();
+            var suppliers = mapper.Map<List<SupplierVM>> (await _context.Suppliers.ToListAsync());
             return View(suppliers);
         }
 
