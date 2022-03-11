@@ -22,7 +22,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Inventories
         public async Task<IActionResult> Index()
         {
-            var inventorys = _context.Inventorys.Include(i => i.Product).ToListAsync();
+            var inventorys = await _context.Inventorys.Include(i => i.Product).ToListAsync();
             return View(inventorys);
         }
 
