@@ -1,12 +1,12 @@
-﻿@model GlobalManagementSystem.Web.Data.Restock
+﻿@model RestockVM
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Enter Restock Data</h1>
 
-<h4>Restock</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -45,14 +45,12 @@
                 <label asp-for="SupplierId" class="control-label"></label>
                 <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.SupplierId"></select>
             </div>
+            <br/>
             <div class="form-group">
+                <a asp-action="Index" class="btn btn-dark"> Back to List</a>&nbsp;
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

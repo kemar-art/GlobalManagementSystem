@@ -38,14 +38,14 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var brand = await _context.Brands
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var brand = await _context.Brands.FirstOrDefaultAsync(m => m.Id == id);
             if (brand == null)
             {
                 return NotFound();
             }
 
-            return View(brand);
+            var brandVM = mapper.Map<BrandVM>(brand);
+            return View(brandVM);
         }
 
         // GET: Brands/Create
@@ -59,15 +59,16 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id")] Brand brand)
+        public async Task<IActionResult> Create(BrandVM brandVM)
         {
             if (ModelState.IsValid)
             {
+                var brand = mapper.Map<Brand>(brandVM);
                 _context.Add(brand);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(brand);
+            return View(brandVM);
         }
 
         // GET: Brands/Edit/5
@@ -83,7 +84,9 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
-            return View(brand);
+
+            var brandVM = mapper.Map<BrandVM>(brand);
+            return View(brandVM);
         }
 
         // POST: Brands/Edit/5
@@ -91,9 +94,9 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Id")] Brand brand)
+        public async Task<IActionResult> Edit(int id, BrandVM brandVM)
         {
-            if (id != brand.Id)
+            if (id != brandVM.Id)
             {
                 return NotFound();
             }
@@ -102,12 +105,13 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 try
                 {
+                    var brand = mapper.Map<Brand>(brandVM);
                     _context.Update(brand);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BrandExists(brand.Id))
+                    if (!BrandExists(brandVM.Id))
                     {
                         return NotFound();
                     }
@@ -118,7 +122,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(brand);
+            return View(brandVM);
         }
 
         // GET: Brands/Delete/5
@@ -144,10 +148,17 @@ namespace GlobalManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-            _context.Brands.Remove(brand);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var brand = await _context.Brands.FindAsync(id);
+                _context.Brands.Remove(brand);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private bool BrandExists(int id)

@@ -38,15 +38,15 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Models
-                .Include(m => m.ProductType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var model = await _context.Models.Include(m => m.ProductType).FirstOrDefaultAsync(m => m.Id == id);
             if (model == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            var modelVM = mapper.Map<ModelVM>(model);
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", model.ProductTypeId);
+            return View(modelVM);
         }
 
         // GET: Models/Create
@@ -61,16 +61,17 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductTypeId,Name,Id")] Model model)
+        public async Task<IActionResult> Create(ModelVM modelVM)
         {
             if (ModelState.IsValid)
             {
+                var model = mapper.Map<Model>(modelVM);
                 _context.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", model.ProductTypeId);
-            return View(model);
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", modelVM.ProductTypeId);
+            return View(modelVM);
         }
 
         // GET: Models/Edit/5
@@ -86,8 +87,10 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
+
+            var modelVM = mapper.Map<ModelVM>(model);
             ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", model.ProductTypeId);
-            return View(model);
+            return View(modelVM);
         }
 
         // POST: Models/Edit/5
@@ -95,9 +98,9 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductTypeId,Name,Id")] Model model)
+        public async Task<IActionResult> Edit(int id, ModelVM modelVM)
         {
-            if (id != model.Id)
+            if (id != modelVM.Id)
             {
                 return NotFound();
             }
@@ -106,12 +109,13 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 try
                 {
+                    var model = mapper.Map<Model>(modelVM);
                     _context.Update(model);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ModelExists(model.Id))
+                    if (!ModelExists(modelVM.Id))
                     {
                         return NotFound();
                     }
@@ -122,8 +126,8 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", model.ProductTypeId);
-            return View(model);
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", modelVM.ProductTypeId);
+            return View(modelVM);
         }
 
         // GET: Models/Delete/5
@@ -150,10 +154,17 @@ namespace GlobalManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var model = await _context.Models.FindAsync(id);
-            _context.Models.Remove(model);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var model = await _context.Models.FindAsync(id);
+                _context.Models.Remove(model);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private bool ModelExists(int id)

@@ -47,7 +47,10 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            return View(restock);
+            var restockVM = mapper.Map<RestockVM>(restock);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restock.ProductId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restock.SupplierId);
+            return View(restockVM);
         }
 
         // GET: Restocks/Create
@@ -63,17 +66,18 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,QTY,Cost,Orderdate,Arriveddate,Orderstatus,SupplierId,Id")] Restock restock)
+        public async Task<IActionResult> Create(RestockVM restockVM)
         {
             if (ModelState.IsValid)
             {
+                var restock = mapper.Map<Restock>(restockVM);
                 _context.Add(restock);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restock.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restock.SupplierId);
-            return View(restock);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restockVM.ProductId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restockVM.SupplierId);
+            return View(restockVM);
         }
 
         // GET: Restocks/Edit/5
@@ -89,9 +93,11 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
+
+            var restockVM = mapper.Map<Restock>(restock);   
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restock.ProductId);
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restock.SupplierId);
-            return View(restock);
+            return View(restockVM);
         }
 
         // POST: Restocks/Edit/5
@@ -99,9 +105,9 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,QTY,Cost,Orderdate,Arriveddate,Orderstatus,SupplierId,Id")] Restock restock)
+        public async Task<IActionResult> Edit(int id, RestockVM restockVM)
         {
-            if (id != restock.Id)
+            if (id != restockVM.Id)
             {
                 return NotFound();
             }
@@ -110,12 +116,13 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 try
                 {
+                    var restock = mapper.Map<Restock>(restockVM);
                     _context.Update(restock);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RestockExists(restock.Id))
+                    if (!RestockExists(restockVM.Id))
                     {
                         return NotFound();
                     }
@@ -126,9 +133,9 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restock.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restock.SupplierId);
-            return View(restock);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restockVM.ProductId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restockVM.SupplierId);
+            return View(restockVM);
         }
 
         // GET: Restocks/Delete/5
@@ -156,10 +163,17 @@ namespace GlobalManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var restock = await _context.Restocks.FindAsync(id);
-            _context.Restocks.Remove(restock);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var restock = await _context.Restocks.FindAsync(id);
+                _context.Restocks.Remove(restock);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private bool RestockExists(int id)

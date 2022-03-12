@@ -1,12 +1,12 @@
-﻿@model GlobalManagementSystem.Web.Data.Inventory
+﻿@model InventoryVM
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Enter Inventory</h1>
 
-<h4>Inventory</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,14 +26,13 @@
                 <input asp-for="Status" class="form-control" />
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
+                <a asp-action="Index" class="btn btn-dark"> Back to List</a>&nbsp;
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

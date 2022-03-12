@@ -1,12 +1,12 @@
-﻿@model GlobalManagementSystem.Web.Data.Supplier
+﻿@model SupplierVM
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit Supplier Info</h1>
 
-<h4>Supplier</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,14 +33,12 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-dark">Back to List</a>
+                <input type="submit" value="Save Changes" class="btn btn-warning" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

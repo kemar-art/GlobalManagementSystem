@@ -38,15 +38,15 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var productType = await _context.ProductTypes
-                .Include(p => p.Brand)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var productType = await _context.ProductTypes.Include(p => p.Brand).FirstOrDefaultAsync(m => m.Id == id);
             if (productType == null)
             {
                 return NotFound();
             }
 
-            return View(productType);
+            var productTypeVM = mapper.Map<ProductTypeVM>(productType);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productType.BrandId);
+            return View(productTypeVM);
         }
 
         // GET: ProductTypes/Create
@@ -61,16 +61,17 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BrandId,Name,Id")] ProductType productType)
+        public async Task<IActionResult> Create(ProductTypeVM productTypeVM)
         {
             if (ModelState.IsValid)
             {
+                var productType = mapper.Map<ProductType>(productTypeVM);
                 _context.Add(productType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productType.BrandId);
-            return View(productType);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productTypeVM.BrandId);
+            return View(productTypeVM);
         }
 
         // GET: ProductTypes/Edit/5
@@ -86,8 +87,10 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
+
+            var productTypeVM = mapper.Map<ProductTypeVM>(productType);
             ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productType.BrandId);
-            return View(productType);
+            return View(productTypeVM);
         }
 
         // POST: ProductTypes/Edit/5
@@ -95,9 +98,9 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BrandId,Name,Id")] ProductType productType)
+        public async Task<IActionResult> Edit(int id, ProductTypeVM productTypeVM)
         {
-            if (id != productType.Id)
+            if (id != productTypeVM.Id)
             {
                 return NotFound();
             }
@@ -106,12 +109,13 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 try
                 {
+                    var productType = mapper.Map<ProductType>(productTypeVM);
                     _context.Update(productType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductTypeExists(productType.Id))
+                    if (!ProductTypeExists(productTypeVM.Id))
                     {
                         return NotFound();
                     }
@@ -122,8 +126,8 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productType.BrandId);
-            return View(productType);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productTypeVM.BrandId);
+            return View(productTypeVM);
         }
 
         // GET: ProductTypes/Delete/5
@@ -150,10 +154,17 @@ namespace GlobalManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productType = await _context.ProductTypes.FindAsync(id);
-            _context.ProductTypes.Remove(productType);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var productType = await _context.ProductTypes.FindAsync(id);
+                _context.ProductTypes.Remove(productType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private bool ProductTypeExists(int id)

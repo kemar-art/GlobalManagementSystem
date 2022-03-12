@@ -38,15 +38,15 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var inventory = await _context.Inventorys
-                .Include(i => i.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var inventory = await _context.Inventorys.Include(i => i.Product).FirstOrDefaultAsync(m => m.Id == id);
             if (inventory == null)
             {
                 return NotFound();
             }
 
-            return View(inventory);
+            var inventoryVM = mapper.Map<InventoryVM>(inventory);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventory.ProductId);
+            return View(inventoryVM);
         }
 
         // GET: Inventories/Create
@@ -61,16 +61,17 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,QTY,Status,Id")] Inventory inventory)
+        public async Task<IActionResult> Create(InventoryVM inventoryVM)
         {
             if (ModelState.IsValid)
             {
+                var inventory = mapper.Map<Inventory>(inventoryVM);
                 _context.Add(inventory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventory.ProductId);
-            return View(inventory);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventoryVM.ProductId);
+            return View(inventoryVM);
         }
 
         // GET: Inventories/Edit/5
@@ -86,8 +87,10 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
+
+            var inventoryVM = mapper.Map<InventoryVM>(inventory);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventory.ProductId);
-            return View(inventory);
+            return View(inventoryVM);
         }
 
         // POST: Inventories/Edit/5
@@ -95,9 +98,9 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,QTY,Status,Id")] Inventory inventory)
+        public async Task<IActionResult> Edit(int id, InventoryVM inventoryVM)
         {
-            if (id != inventory.Id)
+            if (id != inventoryVM.Id)
             {
                 return NotFound();
             }
@@ -106,12 +109,13 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 try
                 {
+                    var inventory = mapper.Map<Inventory>(inventoryVM);
                     _context.Update(inventory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InventoryExists(inventory.Id))
+                    if (!InventoryExists(inventoryVM.Id))
                     {
                         return NotFound();
                     }
@@ -122,8 +126,8 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventory.ProductId);
-            return View(inventory);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventoryVM.ProductId);
+            return View(inventoryVM);
         }
 
         // GET: Inventories/Delete/5
@@ -150,10 +154,17 @@ namespace GlobalManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var inventory = await _context.Inventorys.FindAsync(id);
-            _context.Inventorys.Remove(inventory);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var inventory = await _context.Inventorys.FindAsync(id);
+                _context.Inventorys.Remove(inventory);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private bool InventoryExists(int id)

@@ -38,14 +38,14 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var supplier = await _context.Suppliers.FirstOrDefaultAsync(m => m.Id == id);
             if (supplier == null)
             {
                 return NotFound();
             }
 
-            return View(supplier);
+            var supplierVM = mapper.Map<SupplierVM>(supplier);
+            return View(supplierVM);
         }
 
         // GET: Suppliers/Create
@@ -59,15 +59,16 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Address,Contactnumber,Email,Id")] Supplier supplier)
+        public async Task<IActionResult> Create(SupplierVM supplierVM)
         {
             if (ModelState.IsValid)
             {
+                var supplier = mapper.Map<Supplier>(supplierVM);
                 _context.Add(supplier);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(supplier);
+            return View(supplierVM);
         }
 
         // GET: Suppliers/Edit/5
@@ -83,7 +84,9 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
-            return View(supplier);
+
+            var supplierVM = mapper.Map<SupplierVM>(supplier);
+            return View(supplierVM);
         }
 
         // POST: Suppliers/Edit/5
@@ -91,9 +94,9 @@ namespace GlobalManagementSystem.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Address,Contactnumber,Email,Id")] Supplier supplier)
+        public async Task<IActionResult> Edit(int id, SupplierVM supplierVM)
         {
-            if (id != supplier.Id)
+            if (id != supplierVM.Id)
             {
                 return NotFound();
             }
@@ -102,12 +105,13 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 try
                 {
+                    var supplier = mapper.Map<Supplier>(supplierVM);
                     _context.Update(supplier);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SupplierExists(supplier.Id))
+                    if (!SupplierExists(supplierVM.Id))
                     {
                         return NotFound();
                     }
@@ -118,7 +122,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(supplier);
+            return View(supplierVM);
         }
 
         // GET: Suppliers/Delete/5
@@ -144,10 +148,17 @@ namespace GlobalManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var supplier = await _context.Suppliers.FindAsync(id);
-            _context.Suppliers.Remove(supplier);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var supplier = await _context.Suppliers.FindAsync(id);
+                _context.Suppliers.Remove(supplier);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private bool SupplierExists(int id)
