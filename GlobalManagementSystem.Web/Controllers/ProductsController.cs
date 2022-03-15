@@ -9,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using GlobalManagementSystem.Web.Data;
 using AutoMapper;
 using GlobalManagementSystem.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using GlobalManagementSystem.Web.Constants;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
+    [Authorize(Roles = "Adminnistrator, User")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +29,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var products = mapper.Map<List<ProductVM>> (await _context.Products.Include(p => p.Model).ToListAsync());
+            var products = mapper.Map<List<ProductVM>>(await _context.Products.Include(p => p.Model).ToListAsync());
             return View(products);
         }
 
@@ -48,14 +51,14 @@ namespace GlobalManagementSystem.Web.Controllers
             ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", product.ModelId);
             return View(productVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // GET: Products/Create
         public IActionResult Create()
         {
             ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id");
             return View();
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -73,7 +76,7 @@ namespace GlobalManagementSystem.Web.Controllers
             ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", productVM.ModelId);
             return View(productVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -88,11 +91,11 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var productVM = mapper.Map<ProductVM>(product); 
+            var productVM = mapper.Map<ProductVM>(product);
             ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", product.ModelId);
             return View(productVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -129,7 +132,7 @@ namespace GlobalManagementSystem.Web.Controllers
             ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", productVM.ModelId);
             return View(productVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -148,7 +151,7 @@ namespace GlobalManagementSystem.Web.Controllers
 
             return View(product);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

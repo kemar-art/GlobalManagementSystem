@@ -9,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using GlobalManagementSystem.Web.Data;
 using AutoMapper;
 using GlobalManagementSystem.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using GlobalManagementSystem.Web.Constants;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)]
     public class RestocksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +29,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Restocks
         public async Task<IActionResult> Index()
         {
-            var restocks = mapper.Map<List<RestockVM>> (await _context.Restocks.Include(r => r.Product).Include(r => r.Supplier).ToListAsync());
+            var restocks = mapper.Map<List<RestockVM>>(await _context.Restocks.Include(r => r.Product).Include(r => r.Supplier).ToListAsync());
             return View(restocks);
         }
 
@@ -94,7 +97,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var restockVM = mapper.Map<Restock>(restock);   
+            var restockVM = mapper.Map<Restock>(restock);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restock.ProductId);
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restock.SupplierId);
             return View(restockVM);

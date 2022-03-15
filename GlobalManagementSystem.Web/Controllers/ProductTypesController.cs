@@ -9,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using GlobalManagementSystem.Web.Data;
 using AutoMapper;
 using GlobalManagementSystem.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using GlobalManagementSystem.Web.Constants;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)]
     public class ProductTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +29,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: ProductTypes
         public async Task<IActionResult> Index()
         {
-            var productTypes = mapper.Map<List<ProductTypeVM>> (await _context.ProductTypes.Include(p => p.Brand).ToListAsync());
+            var productTypes = mapper.Map<List<ProductTypeVM>>(await _context.ProductTypes.Include(p => p.Brand).ToListAsync());
             return View(productTypes);
         }
 

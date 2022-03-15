@@ -31,7 +31,6 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -129,6 +128,50 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8d6f43ec-8a45-447a-a691-ad43a8c00c35",
+                            DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            Firstname = "admin",
+                            Lastname = "admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAENx2ffSa3nybkXubnFCbbKzPez/ECGFVUTC1wp0KAnnnPQJYIkkZAL3cN8qbvNsWNg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e66e4d0d-0507-4d50-b634-34f511ddc8e0",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        },
+                        new
+                        {
+                            Id = "02121aa8-c53e-461f-aa80-870381474d56",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "56dc1f6e-9223-4159-9fc4-689262342efa",
+                            DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user@localhost.com",
+                            EmailConfirmed = true,
+                            Firstname = "user",
+                            Lastname = "user",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@LOCALHOST.COM",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPvLbM8UH3H1nClse5H3wxVp61GptyD28eEcz+AfRTZGMLFVpMlglO7pamGcBTZhFA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e392426b-15e9-450f-a37d-51d14fee14ef",
+                            TwoFactorEnabled = false,
+                            UserName = "user@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("GlobalManagementSystem.Web.Data.Inventory", b =>
@@ -146,7 +189,6 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -165,7 +207,6 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductTypeId")
@@ -187,14 +228,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Serialnumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Unitcost")
@@ -219,7 +258,6 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -247,7 +285,6 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Orderstatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
@@ -277,19 +314,15 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Contactnumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -322,6 +355,22 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a",
+                            ConcurrencyStamp = "edf89182-e703-4388-b806-f8bc644b9995",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a",
+                            ConcurrencyStamp = "e813ec2c-7e1f-4a94-8eaf-066f1f419b94",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -411,6 +460,18 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
+                            RoleId = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a"
+                        },
+                        new
+                        {
+                            UserId = "02121aa8-c53e-461f-aa80-870381474d56",
+                            RoleId = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
