@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Inventory</h1>
 
 <p>
     <a class="btn btn-success" asp-action="Create"><i class="fa-solid fa-plus"></i> Create New</a>
@@ -13,7 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.Product.Serialnumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Unitcost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Model.ProductType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Model.ProductType.Brand)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.QTY)
@@ -28,7 +43,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.Id)
+                @Html.DisplayFor(modelItem => item.Product.Serialnumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Unitcost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Brand.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QTY)
@@ -37,8 +67,8 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> |
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a> |
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> &nbsp;
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a> &nbsp;
                 <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"><i class="fa-solid fa-trash-can"></i></button>
             </td>
         </tr>

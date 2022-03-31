@@ -29,7 +29,7 @@ namespace GlobalManagementSystem.Web.Repositoriesy
         public async Task<bool> Exists(int id)
         {
             var entity = await GetAsync(id);
-            return entity != null;  
+            return entity != null;
         }
 
         public async Task<List<T>> GetAllAsync()

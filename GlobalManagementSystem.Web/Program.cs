@@ -8,6 +8,7 @@ using GlobalManagementSystem.Web.Repositoriesy;
 using GlobalManagementSystem.Web.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using GlobalManagementSystem.Web.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,11 +33,18 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
 builder.Services.AddScoped<IRestockRepository, RestockRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Host.UseSerilog((ctx, lc) =>
+    lc.WriteTo.Console()
+    .ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

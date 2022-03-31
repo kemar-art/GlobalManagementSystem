@@ -6,15 +6,21 @@ namespace GlobalManagementSystem.Web.Models
 {
     public class ProductVM : BaseVM
     {
-        [ForeignKey("ModelId")]
-        public ModelVM? Model { get; set; }
+        public ModelVM Model { get; set; }
         [Required]
         public int ModelId { get; set; }
 
+
         [Required]
-        public string? Description { get; set; }
+        public string Description { get; set; }
+
+        [Display(Name = "Serial Number")]
         [Required]
-        public string? Serialnumber { get; set; }
+        public string Serialnumber { get; set; }
+
+        public int QTY { get; set; }
+
+        [Display(Name = "Price")]
         public double Unitcost { get; set; }
     }
 }

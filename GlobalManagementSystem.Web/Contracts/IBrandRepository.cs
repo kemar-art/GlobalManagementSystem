@@ -4,6 +4,5 @@ namespace GlobalManagementSystem.Web.Contracts
 {
     public interface IBrandRepository : IGenericRepository<Brand>
     {
-       
     }
 }

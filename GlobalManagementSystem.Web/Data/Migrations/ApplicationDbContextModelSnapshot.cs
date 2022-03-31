@@ -134,7 +134,7 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         {
                             Id = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d6f43ec-8a45-447a-a691-ad43a8c00c35",
+                            ConcurrencyStamp = "dadd5548-9746-4c9b-bdc8-bce2783a5e6e",
                             DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -145,9 +145,9 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENx2ffSa3nybkXubnFCbbKzPez/ECGFVUTC1wp0KAnnnPQJYIkkZAL3cN8qbvNsWNg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJmW3UnonRh+XHoyF+TVnSDqowPaKEAUhTgotDJBH/7E15rydNCROTUL2X73wqOXVA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e66e4d0d-0507-4d50-b634-34f511ddc8e0",
+                            SecurityStamp = "f6edb972-5da4-4e34-8f14-2c40fbe38b43",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -155,7 +155,7 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         {
                             Id = "02121aa8-c53e-461f-aa80-870381474d56",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "56dc1f6e-9223-4159-9fc4-689262342efa",
+                            ConcurrencyStamp = "0d769d12-1154-4414-829c-b8077967e0c9",
                             DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -166,9 +166,9 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPvLbM8UH3H1nClse5H3wxVp61GptyD28eEcz+AfRTZGMLFVpMlglO7pamGcBTZhFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPuLyKhV2SK1azPkptYdmBOg47ncl92HCZoS5x4Slbb/6guMphwZ+ju39p25jbdrWg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e392426b-15e9-450f-a37d-51d14fee14ef",
+                            SecurityStamp = "04b09e46-10e8-4163-9031-16b7e4067976",
                             TwoFactorEnabled = false,
                             UserName = "user@localhost.com"
                         });
@@ -231,6 +231,9 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QTY")
                         .HasColumnType("int");
 
                     b.Property<string>("Serialnumber")
@@ -360,14 +363,14 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         new
                         {
                             Id = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a",
-                            ConcurrencyStamp = "edf89182-e703-4388-b806-f8bc644b9995",
+                            ConcurrencyStamp = "763653fa-1939-4064-96d5-487f2f1babe9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a",
-                            ConcurrencyStamp = "e813ec2c-7e1f-4a94-8eaf-066f1f419b94",
+                            ConcurrencyStamp = "bd19316c-64da-4333-be3f-0bc818a62dcf",
                             Name = "User",
                             NormalizedName = "USER"
                         });

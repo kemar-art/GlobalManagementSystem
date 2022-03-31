@@ -5,8 +5,7 @@ namespace GlobalManagementSystem.Web.Models
 {
     public class InventoryVM : BaseVM
     {
-        [ForeignKey("ProductId")]
-        public ProductVM? Product { get; set; }
+        public ProductVM Product { get; set; }
         public int ProductId { get; set; }
 
         public int QTY { get; set; }

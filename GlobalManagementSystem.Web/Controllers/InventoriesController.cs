@@ -29,7 +29,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Inventories
         public async Task<IActionResult> Index()
         {
-            var inventorys = mapper.Map<List<InventoryVM>>(await _context.Inventorys.Include(i => i.Product).ToListAsync());
+            var inventorys = mapper.Map<List<InventoryVM>>(await _context.Inventorys.Include(i => i.Product.Model.ProductType.Brand).ToListAsync());
             return View(inventorys);
         }
 
@@ -41,7 +41,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var inventory = await _context.Inventorys.Include(i => i.Product).FirstOrDefaultAsync(m => m.Id == id);
+            var inventory = await _context.Inventorys.Include(i => i.Product.Model.ProductType.Brand).FirstOrDefaultAsync(m => m.Id == id);
             if (inventory == null)
             {
                 return NotFound();

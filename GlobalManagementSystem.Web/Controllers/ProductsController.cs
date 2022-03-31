@@ -11,25 +11,29 @@ using AutoMapper;
 using GlobalManagementSystem.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using GlobalManagementSystem.Web.Constants;
+using GlobalManagementSystem.Web.Contracts;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
-    [Authorize(Roles = "Adminnistrator, User")]
+    [Authorize(Roles = "Administrator, User")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper mapper;
+        private readonly IProductRepository productRepository;
 
-        public ProductsController(ApplicationDbContext context, IMapper mapper)
+        public ProductsController(ApplicationDbContext context, IMapper mapper, IProductRepository productRepository
+            )
         {
             _context = context;
             this.mapper = mapper;
+            this.productRepository = productRepository;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var products = mapper.Map<List<ProductVM>>(await _context.Products.Include(p => p.Model).ToListAsync());
+            var products = mapper.Map<List<ProductVM>>(await _context.Products.Include(p => p.Model.ProductType.Brand).ToListAsync());
             return View(products);
         }
 
@@ -41,14 +45,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.Include(p => p.Model).FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            var productVM = mapper.Map<ProductVM>(product);
-            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", product.ModelId);
+            var productVM = await productRepository.GetProductview(id.Value);
             return View(productVM);
         }
         [Authorize(Roles = Roles.Administrator)]

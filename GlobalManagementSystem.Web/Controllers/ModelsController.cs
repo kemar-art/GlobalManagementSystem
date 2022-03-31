@@ -41,7 +41,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Models.Include(m => m.ProductType).FirstOrDefaultAsync(m => m.Id == id);
+            var model = await _context.Models.Include(m => m.ProductType.Name).FirstOrDefaultAsync(m => m.Id == id);
             if (model == null)
             {
                 return NotFound();

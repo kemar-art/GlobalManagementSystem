@@ -1,6 +1,8 @@
 ﻿using GlobalManagementSystem.Web.Configuration.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using GlobalManagementSystem.Web.Models;
+using GlobalManagementSystem.Web.Data;
 
 namespace GlobalManagementSystem.Web.Data
 {

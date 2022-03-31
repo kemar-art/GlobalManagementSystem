@@ -16,6 +16,7 @@ namespace GlobalManagementSystem.Web.Configuration
             CreateMap<Inventory, InventoryVM>().ReverseMap();
             CreateMap<Restock, RestockVM>().ReverseMap();
             CreateMap<Model, ModelVM>().ReverseMap();
+            CreateMap<Employee, EmployeeVM>().ReverseMap();
         }
     }
 }

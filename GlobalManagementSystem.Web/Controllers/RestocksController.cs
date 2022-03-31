@@ -29,7 +29,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Restocks
         public async Task<IActionResult> Index()
         {
-            var restocks = mapper.Map<List<RestockVM>>(await _context.Restocks.Include(r => r.Product).Include(r => r.Supplier).ToListAsync());
+            var restocks = mapper.Map<List<RestockVM>>(await _context.Restocks.Include(r => r.Product.Model.ProductType.Brand).Include(r => r.Supplier).ToListAsync());
             return View(restocks);
         }
 
@@ -42,7 +42,7 @@ namespace GlobalManagementSystem.Web.Controllers
             }
 
             var restock = await _context.Restocks
-                .Include(r => r.Product)
+                .Include(r => r.Product.Model.ProductType.Brand)
                 .Include(r => r.Supplier)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (restock == null)

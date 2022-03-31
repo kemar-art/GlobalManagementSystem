@@ -6,11 +6,12 @@ namespace GlobalManagementSystem.Web.Models
 {
     public class ProductTypeVM : BaseVM
     {
-        [ForeignKey("BrandId")]
+
+        [Display(Name = "Manufacturer")]
         public BrandVM? Brand { get; set; }
         public int BrandId { get; set; }
 
-        [Display(Name = "Type")]
+        [Display(Name = "Product Type")]
         [Required]
         public string Name { get; set; }
     }

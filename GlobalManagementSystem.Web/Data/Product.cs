@@ -10,6 +10,7 @@ namespace GlobalManagementSystem.Web.Data
 
         public string? Description { get; set; }
         public string? Serialnumber { get; set; }
+        public int QTY { get; set; }
         public double Unitcost { get; set; }
     }
 }
