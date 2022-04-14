@@ -12,13 +12,13 @@ namespace GlobalManagementSystem.Web.Configuration.Entities
             builder.HasData(
                 new IdentityRole
                 {
-                    Id = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a",
+                    Id = "cac43a6e-f7bb-4448-baaf-1add431ccbbf",
                     Name = Roles.Administrator,
                     NormalizedName = Roles.Administrator.ToUpper()
                 },
                  new IdentityRole
                  {
-                     Id = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a",
+                     Id = "eba7548ff-da7d-475a-b17c-a200ad79f77a",
                      Name = Roles.User,
                      NormalizedName = Roles.User.ToUpper()
                  }

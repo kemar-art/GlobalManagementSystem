@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobalManagementSystem.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220315024215_AddDefaultUsersanAndRole")]
-    partial class AddDefaultUsersanAndRole
+    [Migration("20220409175035_AddedUsersAndRoles")]
+    partial class AddedUsersAndRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -134,43 +134,43 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
+                            Id = "ef7547bf-bd4d-485c-b761-a211dd47fa9a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d6f43ec-8a45-447a-a691-ad43a8c00c35",
+                            ConcurrencyStamp = "d25793fe-0c78-4cc9-9af0-8839caa72231",
                             DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
-                            Firstname = "admin",
-                            Lastname = "admin",
+                            Firstname = "Admin",
+                            Lastname = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENx2ffSa3nybkXubnFCbbKzPez/ECGFVUTC1wp0KAnnnPQJYIkkZAL3cN8qbvNsWNg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENh1syqo4crE97mqnh9GQdv5QNTJFPUdfN3vGpbg3FA1PU5U/3axivglLLarrIKphg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e66e4d0d-0507-4d50-b634-34f511ddc8e0",
+                            SecurityStamp = "58a6d1d2-f7df-40fc-af12-185734cd18ce",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
                         new
                         {
-                            Id = "02121aa8-c53e-461f-aa80-870381474d56",
+                            Id = "0f127aa8-a53b-471f-ab80-877381474d56",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "56dc1f6e-9223-4159-9fc4-689262342efa",
+                            ConcurrencyStamp = "4476d062-e57a-4589-be84-a035ab5536f2",
                             DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
-                            Firstname = "user",
-                            Lastname = "user",
+                            Firstname = "User",
+                            Lastname = "User",
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPvLbM8UH3H1nClse5H3wxVp61GptyD28eEcz+AfRTZGMLFVpMlglO7pamGcBTZhFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP3QG3BAzYVGjb9QN3oeXSL2ElPLBm3Hoya7l0JK9lpMB8UtY332VjGNzi+dnjmbtQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e392426b-15e9-450f-a37d-51d14fee14ef",
+                            SecurityStamp = "1f384c26-4396-4b32-908f-b227af79c451",
                             TwoFactorEnabled = false,
                             UserName = "user@localhost.com"
                         });
@@ -233,6 +233,9 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QTY")
                         .HasColumnType("int");
 
                     b.Property<string>("Serialnumber")
@@ -361,15 +364,15 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a",
-                            ConcurrencyStamp = "edf89182-e703-4388-b806-f8bc644b9995",
+                            Id = "cac43a6e-f7bb-4448-baaf-1add431ccbbf",
+                            ConcurrencyStamp = "8751664d-0401-4d20-98e4-59e3561665b6",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a",
-                            ConcurrencyStamp = "e813ec2c-7e1f-4a94-8eaf-066f1f419b94",
+                            Id = "eba7548ff-da7d-475a-b17c-a200ad79f77a",
+                            ConcurrencyStamp = "c1cf7c92-9bb5-446e-aaf6-f2291d9297d2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -466,13 +469,13 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
-                            RoleId = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a"
+                            UserId = "ef7547bf-bd4d-485c-b761-a211dd47fa9a",
+                            RoleId = "cac43a6e-f7bb-4448-baaf-1add431ccbbf"
                         },
                         new
                         {
-                            UserId = "02121aa8-c53e-461f-aa80-870381474d56",
-                            RoleId = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a"
+                            UserId = "0f127aa8-a53b-471f-ab80-877381474d56",
+                            RoleId = "eba7548ff-da7d-475a-b17c-a200ad79f77a"
                         });
                 });
 

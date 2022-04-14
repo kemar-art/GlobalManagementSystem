@@ -136,8 +136,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var brand = await _context.Brands
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var brand = await _context.Brands.FirstOrDefaultAsync(m => m.Id == id);
             if (brand == null)
             {
                 return NotFound();

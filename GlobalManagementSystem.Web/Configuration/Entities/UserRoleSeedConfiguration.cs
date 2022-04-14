@@ -11,14 +11,14 @@ namespace GlobalManagementSystem.Web.Configuration.Entities
             builder.HasData(
                 new IdentityUserRole<string>
                 {
-                    RoleId = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a",
-                    UserId = "eb8547af-bd4d-485c-b761-a200dd49fa9a"
+                    RoleId = "cac43a6e-f7bb-4448-baaf-1add431ccbbf",
+                    UserId = "ef7547bf-bd4d-485c-b761-a211dd47fa9a"
 
                 },
                 new IdentityUserRole<string>
                 {
-                    RoleId = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a",
-                    UserId = "02121aa8-c53e-461f-aa80-870381474d56"
+                    RoleId = "eba7548ff-da7d-475a-b17c-a200ad79f77a",
+                    UserId = "0f127aa8-a53b-471f-ab80-877381474d56"
 
                 }
              );

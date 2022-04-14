@@ -78,7 +78,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restockVM.ProductId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", restockVM.ProductId);
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restockVM.SupplierId);
             return View(restockVM);
         }

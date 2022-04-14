@@ -41,7 +41,8 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var inventory = await _context.Inventorys.Include(i => i.Product.Model.ProductType.Brand).FirstOrDefaultAsync(m => m.Id == id);
+            var inventory = await _context.Inventorys.Include(i => i.Product.Model.ProductType.Brand)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (inventory == null)
             {
                 return NotFound();

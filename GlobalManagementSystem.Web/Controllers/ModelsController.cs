@@ -41,7 +41,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Models.Include(m => m.ProductType.Name).FirstOrDefaultAsync(m => m.Id == id);
+            var model = await _context.Models.Include(m => m.ProductType).FirstOrDefaultAsync(m => m.Id == id);
             if (model == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Models/Create
         public IActionResult Create()
         {
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id");
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Name");
             return View();
         }
 
@@ -92,7 +92,7 @@ namespace GlobalManagementSystem.Web.Controllers
             }
 
             var modelVM = mapper.Map<ModelVM>(model);
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Id", model.ProductTypeId);
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Name", model.ProductTypeId);
             return View(modelVM);
         }
 

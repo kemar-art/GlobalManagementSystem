@@ -13,25 +13,25 @@ namespace GlobalManagementSystem.Web.Configuration.Entities
             builder.HasData(
                 new Employee
                 {
-                    Id = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
+                    Id = "ef7547bf-bd4d-485c-b761-a211dd47fa9a",
                     Email = "admin@localhost.com",
                     NormalizedEmail = "ADMIN@LOCALHOST.COM",
                     NormalizedUserName = "ADMIN@LOCALHOST.COM",
                     UserName = "admin@localhost.com",
-                    Firstname = "admin",
-                    Lastname = "admin",
+                    Firstname = "Admin",
+                    Lastname = "Admin",
                     PasswordHash = hasher.HashPassword(null, "admin@1"),
                     EmailConfirmed = true
                 },
                 new Employee
                 {
-                    Id = "02121aa8-c53e-461f-aa80-870381474d56",
+                    Id = "0f127aa8-a53b-471f-ab80-877381474d56",
                     Email = "user@localhost.com",
                     NormalizedEmail = "USER@LOCALHOST.COM",
                     NormalizedUserName = "USER@LOCALHOST.COM",
                     UserName = "user@localhost.com",
-                    Firstname = "user",
-                    Lastname = "user",
+                    Firstname = "User",
+                    Lastname = "User",
                     PasswordHash = hasher.HashPassword(null, "user@1"),
                     EmailConfirmed = true
                 }

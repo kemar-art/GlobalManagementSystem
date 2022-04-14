@@ -21,6 +21,20 @@ namespace GlobalManagementSystem.Web.Data
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
+                 .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
+            {
+                entry.Entity.DateModified = DateTime.Now;
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.DateCreated = DateTime.Now;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         public DbSet<Brand> Brands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Model> Models { get; set; }
@@ -28,5 +42,6 @@ namespace GlobalManagementSystem.Web.Data
         public DbSet<Inventory> Inventorys { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Restock> Restocks { get; set; }
+        public DbSet<GlobalManagementSystem.Web.Models.ProductVM> ProductVM { get; set; }
     }
 }

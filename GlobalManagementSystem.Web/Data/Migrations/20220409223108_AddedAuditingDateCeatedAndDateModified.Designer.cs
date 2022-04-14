@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobalManagementSystem.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220315023142_AddDefaultUsersanAndRoles")]
-    partial class AddDefaultUsersanAndRoles
+    [Migration("20220409223108_AddedAuditingDateCeatedAndDateModified")]
+    partial class AddedAuditingDateCeatedAndDateModified
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -31,6 +31,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -134,41 +140,45 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
+                            Id = "ef7547bf-bd4d-485c-b761-a211dd47fa9a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "28c18c9e-8b7c-4309-a5d5-2eac8483cc5c",
+                            ConcurrencyStamp = "69cd1373-fec0-4845-bb42-352637353e77",
                             DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@localhost.com",
-                            EmailConfirmed = false,
-                            Firstname = "admin",
-                            Lastname = "admin",
+                            EmailConfirmed = true,
+                            Firstname = "Admin",
+                            Lastname = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBLd9KxCe4UsOqGaU/D6GCwIKMDQDLT7bQPIVXSqVCa5dOfPjri2C43zVVCr3+j7tg==",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH8oT531wuIdGY+VGd/q1hC+ufqo9mwnMi3JiMh3OQ1GZUybf8aB0Nf0tIoc348N7Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "23678b68-58c0-4ac8-b675-a60fff6f2e74",
-                            TwoFactorEnabled = false
+                            SecurityStamp = "ac17ad0b-7c1a-40e6-b9fd-b2927d5547cc",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
                         },
                         new
                         {
-                            Id = "02121aa8-c53e-461f-aa80-870381474d56",
+                            Id = "0f127aa8-a53b-471f-ab80-877381474d56",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c19dc59c-b26e-48cb-bb2e-f74015f9e1f5",
+                            ConcurrencyStamp = "b0543be4-c8a0-4789-9e40-2a3c75d226c2",
                             DateEnded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Datestarted = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user@localhost.com",
-                            EmailConfirmed = false,
-                            Firstname = "user",
-                            Lastname = "user",
+                            EmailConfirmed = true,
+                            Firstname = "User",
+                            Lastname = "User",
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJFDOSBxVDCu7SH25bD7Y5xhdO3CaIo3YTNbVVbLOJGawJqiqgHEQN8jj77M1LJcNQ==",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPJXMSh6g/uCERBmcREnbCjY5mTUQLZXK0CuN8u1qGMWYLRL/FD7dh5LNgb8uNKgxw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c362d6b2-7b06-4928-b94f-2040c22fdb8e",
-                            TwoFactorEnabled = false
+                            SecurityStamp = "d2d89258-d1fc-4115-8da7-560ba739dd25",
+                            TwoFactorEnabled = false,
+                            UserName = "user@localhost.com"
                         });
                 });
 
@@ -179,6 +189,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -204,6 +220,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -225,10 +247,19 @@ namespace GlobalManagementSystem.Web.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QTY")
                         .HasColumnType("int");
 
                     b.Property<string>("Serialnumber")
@@ -255,6 +286,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -278,6 +315,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
 
                     b.Property<double>("Cost")
                         .HasColumnType("float");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Orderdate")
                         .HasColumnType("datetime2");
@@ -316,6 +359,12 @@ namespace GlobalManagementSystem.Web.Data.Migrations
 
                     b.Property<string>("Contactnumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -357,15 +406,15 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a",
-                            ConcurrencyStamp = "78acf4f4-140d-4565-a451-21d40bd7be05",
+                            Id = "cac43a6e-f7bb-4448-baaf-1add431ccbbf",
+                            ConcurrencyStamp = "aa00291b-3bc6-4d8c-93e5-ddcb4b25c41e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a",
-                            ConcurrencyStamp = "aed6bbbf-db91-4ac2-8dbb-965bd402eef5",
+                            Id = "eba7548ff-da7d-475a-b17c-a200ad79f77a",
+                            ConcurrencyStamp = "518f47a9-d8ff-484e-ad90-a5e33383dbca",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -462,13 +511,13 @@ namespace GlobalManagementSystem.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "eb8547af-bd4d-485c-b761-a200dd49fa9a",
-                            RoleId = "ed8547af - bd5d - 485c - b717 - a200dd49fa9a"
+                            UserId = "ef7547bf-bd4d-485c-b761-a211dd47fa9a",
+                            RoleId = "cac43a6e-f7bb-4448-baaf-1add431ccbbf"
                         },
                         new
                         {
-                            UserId = "02121aa8-c53e-461f-aa80-870381474d56",
-                            RoleId = "eae8547af - bd5d - 475a - b777 - a200bd49fe9a"
+                            UserId = "0f127aa8-a53b-471f-ab80-877381474d56",
+                            RoleId = "eba7548ff-da7d-475a-b17c-a200ad79f77a"
                         });
                 });
 

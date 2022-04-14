@@ -13,22 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product.Serialnumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Unitcost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Model)
+                @Html.DisplayNameFor(model => model.Product.Model.ProductType.Brand)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product.Model.ProductType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product.Model.ProductType.Brand)
+                @Html.DisplayNameFor(model => model.Product.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Serialnumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Unitcost)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.QTY)
@@ -43,22 +40,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.Serialnumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Unitcost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Model.Name)
+                @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Brand.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Name)
             </td>
+            
+             <td>
+                @Html.DisplayFor(modelItem => item.Product.Model.Name)
+            </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Brand.Name)
+                @Html.DisplayFor(modelItem => item.Product.Serialnumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Unitcost)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QTY)

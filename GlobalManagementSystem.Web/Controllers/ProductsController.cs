@@ -52,7 +52,7 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id");
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name");
             return View();
         }
         [Authorize(Roles = Roles.Administrator)]
@@ -89,7 +89,7 @@ namespace GlobalManagementSystem.Web.Controllers
             }
 
             var productVM = mapper.Map<ProductVM>(product);
-            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", product.ModelId);
+            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name", product.ModelId);
             return View(productVM);
         }
         [Authorize(Roles = Roles.Administrator)]

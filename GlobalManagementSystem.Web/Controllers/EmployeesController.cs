@@ -6,25 +6,28 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
     public class EmployeesController : Controller
     {
-
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<Employee> userManager;
         private readonly IMapper mapper;
 
-        public EmployeesController(UserManager<Employee> userManager, IMapper mapper)
+        public EmployeesController(ApplicationDbContext context, UserManager<Employee> userManager, IMapper mapper)
         {
             this.userManager = userManager;
             this.mapper = mapper;
+            _context = context;
 
         }
+
         // GET: EmplyeesController
         public async Task<IActionResult> Index()
         {
-            var employees = await userManager.GetUsersInRoleAsync(Roles.User);
+            var employees = userManager.Users.ToList();
             var model = mapper.Map<List<EmployeeVM>>(employees);
             return View(model);
         }
@@ -53,45 +56,71 @@ namespace GlobalManagementSystem.Web.Controllers
         }
 
         // GET: EmplyeesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await userManager.FindByIdAsync(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            var model = mapper.Map<EmployeeVM>(employee);
+            return View(model);
         }
 
         // POST: EmplyeesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, EmployeeVM employeeVM)
         {
-            try
+            if (id != employeeVM.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await userManager.FindByIdAsync(employeeVM.Id);
+                    mapper.Map(employeeVM, user);
+                    var result = await userManager.UpdateAsync(user);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmployeeExists(employeeVM.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(employeeVM);
         }
 
-        // GET: EmplyeesController/Delete/5
-        public ActionResult Delete(int id)
+        private bool EmployeeExists(string id)
         {
-            return View();
+            throw new NotImplementedException();
         }
 
-        // POST: EmplyeesController/Delete/5
-        [HttpPost]
+        // POST: EmployeeVM/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var user = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(user);
+            return RedirectToAction(nameof(Index));
         }
     }
+
 }

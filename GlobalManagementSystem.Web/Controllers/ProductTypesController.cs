@@ -41,7 +41,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            var productType = await _context.ProductTypes.Include(p => p.Brand.Name).FirstOrDefaultAsync(m => m.Id == id);
+            var productType = await _context.ProductTypes.Include(p => p.Brand).FirstOrDefaultAsync(m => m.Id == id);
             if (productType == null)
             {
                 return NotFound();
@@ -92,7 +92,7 @@ namespace GlobalManagementSystem.Web.Controllers
             }
 
             var productTypeVM = mapper.Map<ProductTypeVM>(productType);
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productType.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", productType.BrandId);
             return View(productTypeVM);
         }
 

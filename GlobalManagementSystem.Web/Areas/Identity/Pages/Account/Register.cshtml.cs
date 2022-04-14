@@ -20,12 +20,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using GlobalManagementSystem.Web.Constants;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<Employee> _signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<Employee> _userManager;
         private readonly IUserStore<Employee> _userStore;
         private readonly IUserEmailStore<Employee> _emailStore;
@@ -36,6 +38,7 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
             UserManager<Employee> userManager,
             IUserStore<Employee> userStore,
             SignInManager<Employee> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -43,6 +46,7 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            this.roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -90,8 +94,9 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
             public string Lastname { get; set; }
 
             [Required]
-            [Display(Name = "Date Of Birth ")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
             [DataType(DataType.Date)]
+            [Display(Name = "Date Of Birth")]
             public DateTime DateOfBirth { get; set; }
 
             [Required]
@@ -110,8 +115,14 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Start Date")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
             [DataType(DataType.Date)]
             public DateTime Datestarted { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public string RoleId { get; set; }
+            public SelectList RolesList { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -136,6 +147,10 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            Input = new InputModel
+            {
+                RolesList = new SelectList(roleManager.Roles.ToList(), "Name", "Name")
+            };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -157,6 +172,7 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
                 user.TRN = Input.TRN;
                 user.NIS = Input.NIS;
                 user.Phone = Input.Phone;
+                user.Email = Input.Email;
                 user.Address = Input.Address;
                 user.Datestarted = Input.Datestarted;
 
@@ -165,7 +181,7 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddToRoleAsync(user, Roles.User);
+                    await _userManager.AddToRoleAsync(user, Input.RoleId);
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
