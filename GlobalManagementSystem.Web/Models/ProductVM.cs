@@ -18,6 +18,9 @@ namespace GlobalManagementSystem.Web.Models
         [Required]
         public string Serialnumber { get; set; }
 
+        [Display(Name = "Product")]
+        public string Name { get; set; }
+
         public int QTY { get; set; }
 
         [Display(Name = "Price")]

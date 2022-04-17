@@ -52,7 +52,10 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Name");
+            var models = _context.Models.Include(q => q.ProductType.Brand)
+                .Select(q => new { Id = q.Id, Name = $"{q.ProductType.Brand.Name} | {q.ProductType.Name} | {q.Name}" })
+                .ToList();
+            ViewData["ModelId"] = new SelectList(models, "Id", "Name");
             return View();
         }
         [Authorize(Roles = Roles.Administrator)]
@@ -70,7 +73,10 @@ namespace GlobalManagementSystem.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ModelId"] = new SelectList(_context.Models, "Id", "Id", productVM.ModelId);
+            var models = _context.Models.Include(q => q.ProductType.Brand)
+                .Select(q => new { Id = q.Id, Name = $"{q.ProductType.Brand.Name} {q.ProductType.Name} {q.Name}" })
+                .ToList();
+            ViewData["ModelId"] = new SelectList(models, "Id", "Name", productVM.ModelId);
             return View(productVM);
         }
         [Authorize(Roles = Roles.Administrator)]

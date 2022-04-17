@@ -73,7 +73,7 @@ namespace GlobalManagementSystem.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", productTypeVM.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", productTypeVM.BrandId);
             return View(productTypeVM);
         }
 

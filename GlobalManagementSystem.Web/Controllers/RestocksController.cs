@@ -59,8 +59,16 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Restocks/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id");
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+               .Select(q => new
+               {
+                   Id = q.Id,
+                   Name = $"{q.Model.ProductType.Brand.Name } | " +
+               $"{q.Model.ProductType.Name } | {q.Model.Name} {q.Name}"
+               })
+               .ToList();
+            ViewData["ProductId"] = new SelectList(products, "Id", "Name");
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Name");
             return View();
         }
 
@@ -78,8 +86,16 @@ namespace GlobalManagementSystem.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", restockVM.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restockVM.SupplierId);
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+               .Select(q => new
+               {
+                   Id = q.Id,
+                   Name = $"{q.Model.ProductType.Brand.Name } " +
+               $"{q.Model.ProductType.Name } {q.Model.Name} {q.Name}"
+               })
+               .ToList();
+            ViewData["ProductId"] = new SelectList(products, "Id", "Name", restockVM.ProductId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Name", "Name", restockVM.SupplierId);
             return View(restockVM);
         }
 
@@ -96,10 +112,17 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
-
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+              .Select(q => new
+              {
+                  Id = q.Id,
+                  Name = $"{q.Model.ProductType.Brand.Name } | " +
+              $"{q.Model.ProductType.Name } | {q.Model.Name} {q.Name}"
+              })
+              .ToList();
             var restockVM = mapper.Map<Restock>(restock);
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restock.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restock.SupplierId);
+            ViewData["ProductId"] = new SelectList(products, "Id", "Name", restock.ProductId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Name", restock.SupplierId);
             return View(restockVM);
         }
 
@@ -136,7 +159,15 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", restockVM.ProductId);
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+             .Select(q => new
+             {
+                 Id = q.Id,
+                 Name = $"{q.Model.ProductType.Brand.Name } " +
+             $"{q.Model.ProductType.Name } {q.Model.Name} {q.Name}"
+             })
+             .ToList();
+            ViewData["ProductId"] = new SelectList(products, "Id", "Id", restockVM.ProductId);
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id", restockVM.SupplierId);
             return View(restockVM);
         }

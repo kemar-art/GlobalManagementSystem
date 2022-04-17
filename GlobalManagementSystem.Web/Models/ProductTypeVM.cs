@@ -6,9 +6,9 @@ namespace GlobalManagementSystem.Web.Models
 {
     public class ProductTypeVM : BaseVM
     {
-
+        public BrandVM Brand { get; set; }
         [Display(Name = "Manufacturer")]
-        public BrandVM? Brand { get; set; }
+        [Required]
         public int BrandId { get; set; }
 
         [Display(Name = "Product Type")]

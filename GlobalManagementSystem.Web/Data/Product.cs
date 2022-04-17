@@ -8,6 +8,8 @@ namespace GlobalManagementSystem.Web.Data
         public Model? Model { get; set; }
         public int ModelId { get; set; }
 
+        public string Name { get; set; }
+
         public string? Description { get; set; }
         public string? Serialnumber { get; set; }
         public int QTY { get; set; }

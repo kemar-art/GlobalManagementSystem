@@ -13,25 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th><th>
-                @Html.DisplayNameFor(model => model.Product.Model)
-            </th><th>
-                @Html.DisplayNameFor(model => model.Product.Model.ProductType)
-            </th><th>
                 @Html.DisplayNameFor(model => model.Product.Model.ProductType.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Model.ProductType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Model)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.QTY)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Orderdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Arriveddate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Orderstatus)
@@ -46,25 +40,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.Description)
-            </td><td>
-                @Html.DisplayFor(modelItem => item.Product.Model.Name)
-            </td><td>
-                @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Name)
-            </td><td>
                 @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Brand.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Model.ProductType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Model.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QTY)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Orderdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Arriveddate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Orderstatus)

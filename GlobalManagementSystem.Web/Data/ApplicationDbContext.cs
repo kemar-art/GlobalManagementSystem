@@ -42,6 +42,5 @@ namespace GlobalManagementSystem.Web.Data
         public DbSet<Inventory> Inventorys { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Restock> Restocks { get; set; }
-        public DbSet<GlobalManagementSystem.Web.Models.ProductVM> ProductVM { get; set; }
     }
 }

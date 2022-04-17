@@ -207,12 +207,12 @@
                             </li>
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" 
-                                  asp-controller="Products" asp-action="Index">
-                                  <i class="fa-solid fa-cubes"></i>
-                                  <span>Products</span>
+                                  asp-area="Identity" asp-page="/Account/Register">
+                                  <i class="fa-solid fa-id-card"></i>
+                                  <span>Register Users</span>
                                 </a>
                             </li>
-                            <li class="sidebar-item">
+                            <li class="sidebar-item" color="black">
                                 <a class="nav-link dropdown-toggle" href="#" 
                                     id="navbarDropdownMenuLink" role="button" 
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -225,14 +225,20 @@
                                     <li><a class="dropdown-item"  asp-controller="Models" asp-action="Index">Model</a></li>
                                     <li><a class="dropdown-item"  asp-controller="Inventories" asp-action="Index">Inventory</a></li>
                                     <li><a class="dropdown-item"  asp-controller="Restocks" asp-action="Index">Restock</a></li>
-                                    <li><a class="dropdown-item"  asp-controller="Suppliers" asp-action="Index">Supplier</a></li>
                                 </ul>
                             </li>
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" 
-                                  asp-area="Identity" asp-page="/Account/Register">
-                                  <i class="fa-solid fa-users"></i>
-                                  <span>Register Users</span>
+                                  asp-controller="Products" asp-action="Index">
+                                  <i class="fa-solid fa-cubes"></i>
+                                  <span>Products</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                  asp-controller="Suppliers" asp-action="Index">
+                                  <i class="fa-solid fa-city"></i>
+                                  <span>Suppliers</span>
                                 </a>
                             </li>
                          }

@@ -56,7 +56,16 @@ namespace GlobalManagementSystem.Web.Controllers
         // GET: Inventories/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
+
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+               .Select(q => new
+               {
+                   Id = q.Id,
+                   Name = $"{q.Model.ProductType.Brand.Name } | " +
+               $"{q.Model.ProductType.Name } | {q.Model.Name} {q.Name}"
+               })
+               .ToList();
+            ViewData["ProductId"] = new SelectList(products, "Id", "Name");
             return View();
         }
 
@@ -74,7 +83,17 @@ namespace GlobalManagementSystem.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventoryVM.ProductId);
+
+
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+               .Select(q => new
+               {
+                   Id = q.Id,
+                   Name = $"{q.Model.ProductType.Brand.Name } " +
+               $"{q.Model.ProductType.Name } {q.Model.Name} {q.Name}"
+               })
+               .ToList();
+            ViewData["ProductId"] = new SelectList(products, "Id", "Name", inventoryVM.ProductId);
             return View(inventoryVM);
         }
 
@@ -91,9 +110,16 @@ namespace GlobalManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
-
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+           .Select(q => new
+           {
+               Id = q.Id,
+               Name = $"{q.Model.ProductType.Brand.Name } | " +
+           $"{q.Model.ProductType.Name } | {q.Model.Name} {q.Name}"
+           })
+           .ToList();
             var inventoryVM = mapper.Map<InventoryVM>(inventory);
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventory.ProductId);
+            ViewData["ProductId"] = new SelectList(products, "Id", "Name", inventory.ProductId);
             return View(inventoryVM);
         }
 
@@ -130,7 +156,15 @@ namespace GlobalManagementSystem.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventoryVM.ProductId);
+            var products = _context.Products.Include(q => q.Model.ProductType.Brand)
+           .Select(q => new
+           {
+               Id = q.Id,
+               Name = $"{q.Model.ProductType.Brand.Name } " +
+           $"{q.Model.ProductType.Name } {q.Model.Name} {q.Name}"
+           })
+           .ToList();
+            ViewData["ProductId"] = new SelectList(products, "Id", "Id", inventoryVM.ProductId);
             return View(inventoryVM);
         }
 

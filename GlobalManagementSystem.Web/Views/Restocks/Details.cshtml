@@ -14,7 +14,7 @@
             @Html.DisplayNameFor(model => model.Product)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Product.Id)
+            @Html.DisplayFor(model => model.Product.Model.ProductType.Brand.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.QTY)
@@ -29,18 +29,6 @@
             @Html.DisplayFor(model => model.Cost)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Orderdate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Orderdate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Arriveddate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Arriveddate)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Orderstatus)
         </dt>
         <dd class = "col-sm-10">
@@ -50,7 +38,7 @@
             @Html.DisplayNameFor(model => model.Supplier)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.Id)
+            @Html.DisplayFor(model => model.Supplier.Name)
         </dd>
     </dl>
 </div>

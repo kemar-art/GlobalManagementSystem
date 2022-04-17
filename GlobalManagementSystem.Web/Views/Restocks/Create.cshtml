@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Enter Restock Data</h1>
+<h1>Create Restock</h1>
 
 <h4></h4>
 <hr />
@@ -13,8 +13,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Product.Model.ProductType.Brand.Name" class="control-label"></label>
-                <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.ProductId"></select>
+                <label asp-for="Product.Name" class="control-label"></label>
+                <select asp-for="ProductId" class ="form-select" asp-items="ViewBag.ProductId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="QTY" class="control-label"></label>
@@ -27,23 +27,13 @@
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Orderdate" class="control-label"></label>
-                <input asp-for="Orderdate" class="form-control datepicker" />
-                <span asp-validation-for="Orderdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Arriveddate" class="control-label"></label>
-                <input asp-for="Arriveddate" class="form-control datepicker" />
-                <span asp-validation-for="Arriveddate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Orderstatus" class="control-label"></label>
                 <input asp-for="Orderstatus" class="form-control" />
                 <span asp-validation-for="Orderstatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SupplierId" class="control-label"></label>
-                <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.SupplierId"></select>
+                <label asp-for="Supplier" class="control-label"></label>
+                <select asp-for="SupplierId" class ="form-select" asp-items="ViewBag.SupplierId"></select>
             </div>
             <br/>
             <div class="form-group">

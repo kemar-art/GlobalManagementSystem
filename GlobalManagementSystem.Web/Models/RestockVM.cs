@@ -7,6 +7,7 @@ namespace GlobalManagementSystem.Web.Models
     public class RestockVM : BaseVM
     {
         public ProductVM Product { get; set; }
+        [Display(Name = "Product")]
         [Required]
         public int ProductId { get; set; }
 
@@ -24,9 +25,11 @@ namespace GlobalManagementSystem.Web.Models
         [DataType(DataType.Date)]
         public DateTime Arriveddate { get; set; }
 
+        [Display(Name = "Order Status")]
         public string Orderstatus { get; set; }
 
         public Supplier Supplier { get; set; }
+        [Display(Name = "Supplier")]
         public int SupplierId { get; set; }
     }
 }
