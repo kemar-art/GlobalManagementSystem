@@ -14,7 +14,7 @@ using GlobalManagementSystem.Web.Constants;
 
 namespace GlobalManagementSystem.Web.Controllers
 {
-    [Authorize(Roles = Roles.Administrator)]
+    [Authorize(Roles = "Administrator, User")]
     public class InventoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,14 +25,12 @@ namespace GlobalManagementSystem.Web.Controllers
             _context = context;
             this.mapper = mapper;
         }
-
         // GET: Inventories
         public async Task<IActionResult> Index()
         {
             var inventorys = mapper.Map<List<InventoryVM>>(await _context.Inventorys.Include(i => i.Product.Model.ProductType.Brand).ToListAsync());
             return View(inventorys);
         }
-
         // GET: Inventories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,7 +50,7 @@ namespace GlobalManagementSystem.Web.Controllers
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", inventory.ProductId);
             return View(inventoryVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // GET: Inventories/Create
         public IActionResult Create()
         {
@@ -96,7 +94,7 @@ namespace GlobalManagementSystem.Web.Controllers
             ViewData["ProductId"] = new SelectList(products, "Id", "Name", inventoryVM.ProductId);
             return View(inventoryVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // GET: Inventories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -167,7 +165,7 @@ namespace GlobalManagementSystem.Web.Controllers
             ViewData["ProductId"] = new SelectList(products, "Id", "Id", inventoryVM.ProductId);
             return View(inventoryVM);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // GET: Inventories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -186,7 +184,7 @@ namespace GlobalManagementSystem.Web.Controllers
 
             return View(inventory);
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         // POST: Inventories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

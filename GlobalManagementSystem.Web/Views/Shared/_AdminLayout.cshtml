@@ -2,8 +2,6 @@
 @using System.Security.Claims
 @inject SignInManager<Employee> SignInManager
 @inject UserManager<Employee> UserManager
-
-
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
@@ -67,11 +65,16 @@
              <div id="marquee"> 
                 <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
                     If this text is running too fast, 
-                    hover over the text and it will stop. You can use this to broadcost notification.
+                    hover over the text and it will stop. You can use this to broadcast notification.
                 </marquee>
              </div>                  
             }
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                @if (SignInManager.IsSignedIn(User))
+            {    
+               <strong><h5 class="nav-link text-white ">GlobalManagementSystem</h5></strong> 
+            }
+                
 
                 <div class="navbar-header" data-logobg="skin6">
                     <!-- ============================================================== -->
@@ -104,7 +107,6 @@
                 <!-- End Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                   
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
@@ -161,30 +163,21 @@
                              <a class="sidebar-link waves-effect waves-dark sidebar-link" 
                                  asp-area="" asp-controller="Home" asp-action="Index">
                                  <i class="fas fa-home"></i>
-                                 <span class="hide-menu">Home</span>
+                                 <span>Home</span>
                              </a>
                         </li>
                         <ul class="navbar-nav">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                @*<li class="nav-item">
-                                    <a  class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-                                </li>
-                                <li class="nav-item">
-                                    <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                        <button  type="submit" class="nav-link btn btn-link text-white">Logout</button>
-                                    </form>
-                                </li>*@
-                            }
-                            else
-                            {
-                                @*<li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                                </li>*@
-                                <li class="text-center p-20 upgrade-btn">
-                                    <a class="btn d-grid btn-info text-white" asp-area="Identity" asp-page="/Account/Login"><strong>Login</strong></a>
-                                </li>
-                            }
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        }
+                        else
+                        {
+                           <li class="text-center p-20 upgrade-btn">
+                              <a class="btn d-grid btn-info text-white" asp-area="Identity" 
+                                  asp-page="/Account/Login"><strong>Login</strong>
+                              </a>
+                           </li>
+                        }
                         </ul>
                         @if (User.IsInRole(Roles.User))
                         {
@@ -193,6 +186,13 @@
                                   asp-controller="Products" asp-action="Index">
                                   <i class="fa-solid fa-cubes"></i>
                                   <span>Products</span>
+                               </a>
+                            </li>
+                            <li class="sidebar-item">
+                               <a class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                  asp-controller="Inventories" asp-action="Index">
+                                  <i class="fa-solid fa-cart-flatbed"></i>
+                                  <span>Inventory</span>
                                </a>
                             </li>
                         }
@@ -212,6 +212,20 @@
                                   <span>Register Users</span>
                                 </a>
                             </li>
+                                <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                  asp-controller="Products" asp-action="Index">
+                                  <i class="fa-solid fa-cubes"></i>
+                                  <span>Products</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                  asp-controller="Suppliers" asp-action="Index">
+                                  <i class="fa-solid fa-city"></i>
+                                  <span>Suppliers</span>
+                                </a>
+                            </li>
                             <li class="sidebar-item" color="black">
                                 <a class="nav-link dropdown-toggle" href="#" 
                                     id="navbarDropdownMenuLink" role="button" 
@@ -227,31 +241,17 @@
                                     <li><a class="dropdown-item"  asp-controller="Restocks" asp-action="Index">Restock</a></li>
                                 </ul>
                             </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" 
-                                  asp-controller="Products" asp-action="Index">
-                                  <i class="fa-solid fa-cubes"></i>
-                                  <span>Products</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" 
-                                  asp-controller="Suppliers" asp-action="Index">
-                                  <i class="fa-solid fa-city"></i>
-                                  <span>Suppliers</span>
-                                </a>
-                            </li>
                          }
                          @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="text-center p-20 upgrade-btn">
+                         {
+                            <li class="text-center p-20">
                                 <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" 
-                                asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button  class="btn d-grid btn-info text-white" target="_blank">Logout</button>
+                                   asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button  class="btn d-grid btn-info text-white" target="_blank">Logout</button>
                                 </form>
                             </li>
-                        }
-                    </ul>
+                         }
+                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -268,12 +268,18 @@
                 <div class="row">
                    @RenderBody()
                 </div>
-            </div>  
+            </div>
+            <footer class="border-top footer text-dark">
+           <div class="container">
+             <strong>&copy; @DateTime.Now.Year - GlobalManagementSystem</strong> 
+           </div>
+        </footer>
         </div>
 
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
+        
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
@@ -285,48 +291,10 @@
     
          <!-- Modal for Lenova start -->
     <!-- ============================================================== -->
-      <<button data-pop-target="#pop">View Item</button>
-        <div class="item" id="pop">
-            <div class="item-header">
-                <div class="title"><h3><strong>Lenovo Flex 5 Laptop</strong></h3></div>
-                <button data-close-button class="close-button">&times;</button>
-            </div>
-            <div class="item-body">
-              <div class=img-div>
-                <img src="~/images/1.jpg" style="margin-top: 10px;
-                height: 350px; width: 400px;">
-               
-                    <div class="div-title">
-                     <h4 class="sub-title">About this item </h4>
-                      <ul class="ordered-title">
-                        <li class="first-title">Powered by an AMD Ryzen 5 5500U mobile processor with 
-                            Radeon graphics, this portable notebook computer has 
-                            16GB DDR4 RAM and 256GB NVMe SSD Storage 
-                        </li>
-                        <li class="second-title">Reduce the clutter - The Flex 5 14 touchscreen laptop has 
-                            a narrow bezel on 4 sides for more viewing area and less 
-                            clutter on the IPS FHD (1920 x 1080) display 
-                        </li>
-                        <li>
-                            WiFi 6 (2x2 802.11 ax) and Bluetooth 5.0 connectivity, 
-                            plus USB, USB-C, and HDMI ports 
-                        </li>
-                        <li>
-                            Quieter and cooler with intelligent thermals, 
-                            plus you can calibrate performance with Q-control, 
-                            with 3 modes to match your performance needs 
-                        </li>
-                      </ul>
-                </div>
-               </div>
-            </div>
-        </div>
-        <div id="overlay"></div>
+     
 
      <!-- Modal for Lenova Stop -->
     <!-- ============================================================== -->
-    
-
 
      <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -93,10 +93,11 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string Lastname { get; set; }
 
+
             [Required]
+            [Display(Name = "Date Of Birth")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
             [DataType(DataType.Date)]
-            [Display(Name = "Date Of Birth")]
             public DateTime DateOfBirth { get; set; }
 
             [Required]
@@ -211,6 +212,7 @@ namespace GlobalManagementSystem.Web.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            Input.RolesList = new SelectList(roleManager.Roles.ToList(), "Name", "Name");
             return Page();
         }
 
